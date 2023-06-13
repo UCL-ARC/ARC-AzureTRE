@@ -15,4 +15,6 @@ module "image" {
   os_type          = each.value.os_type
   description      = each.value.description
   hyperv_version   = each.value.hyperv_version
+  base_image       = each.value.base_image
+  init_script      = each.value.init_script
 }

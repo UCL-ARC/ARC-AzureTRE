@@ -12,7 +12,7 @@ resource "azapi_resource" "image_template" {
       }
     }
     properties = {
-      buildTimeoutInMinutes = 90,
+      buildTimeoutInMinutes = 180,
 
       vmProfile = {
         vmSize       = "Standard_DS2_v2",
@@ -20,21 +20,22 @@ resource "azapi_resource" "image_template" {
       },
 
       source = {
-        # TODO: template
         type      = "PlatformImage",
-        publisher = "canonical",
-        offer     = "0001-com-ubuntu-server-jammy",
-        sku       = "22_04-lts-gen2",
+        publisher = var.base_image.publisher,
+        offer     = var.base_image.offer,
+        sku       = var.base_image.sku,
         version   = "latest"
-
       },
-      customize = [
-        {
-          type   = "Shell",
-          name   = "setupVM",
-          inline = split("\n", file("${local.path_to_scripts}/init.sh"))
-        }
-      ],
+      customize = concat(
+        [
+          {
+            type   = endswith(var.init_script, ".ps1") ? "PowerShell" : "Shell",
+            name   = "setupVM",
+            inline = split("\n", file(local.init_script_path))
+          }
+        ],
+        fileexists(local.customize__file_path) ? jsondecode(file(local.customize__file_path)) : []
+      ),
       distribute = [
         {
           type           = "SharedImage",
@@ -42,7 +43,7 @@ resource "azapi_resource" "image_template" {
           runOutputName  = "${var.image_definition}",
           artifactTags = {
             source    = "azureVmImageBuilder",
-            baseosimg = "ubuntu2204"
+            baseosimg = "${var.base_image.sku}"
           },
           replicationRegions = [var.location],
           storageAccountType = "Standard_LRS"
@@ -52,5 +53,18 @@ resource "azapi_resource" "image_template" {
 
   tags = {
     "useridentity" = "enabled"
+  }
+
+  # Avoid 409 Conflict by always replacing
+  lifecycle {
+    replace_triggered_by = [
+      null_resource.always_run
+    ]
+  }
+}
+
+resource "null_resource" "always_run" {
+  triggers = {
+    timestamp = timestamp()
   }
 }

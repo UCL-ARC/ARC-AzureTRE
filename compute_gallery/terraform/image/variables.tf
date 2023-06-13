@@ -50,3 +50,16 @@ variable "image_builder_id" {
   type        = string
   description = "Resource ID of the image builder user assigned identity"
 }
+
+variable "init_script" {
+  type        = string
+  description = "Initialisation script. Either .sh or .ps1"
+}
+
+variable "base_image" {
+  type = object({
+    publisher = string
+    offer     = string
+    sku       = string
+  })
+}
