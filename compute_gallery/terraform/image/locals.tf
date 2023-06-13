@@ -1,3 +1,3 @@
 locals {
-    path_to_scripts = "${path.module}/../../templates/${var.image_identifier}"
+  path_to_scripts = "${path.module}/../../templates/${var.image_identifier}"
 }

@@ -5,52 +5,50 @@ resource "azapi_resource" "image_template" {
   location  = var.location
 
   body = jsonencode({
-  identity = {
+    identity = {
       type = "UserAssigned"
       userAssignedIdentities = {
-          tostring(var.image_builder_id) = {}
+        tostring(var.image_builder_id) = {}
       }
-  }
-  properties = {
-    buildTimeoutInMinutes = 90,
+    }
+    properties = {
+      buildTimeoutInMinutes = 90,
 
-    vmProfile = {
-        vmSize = "Standard_DS2_v2",
+      vmProfile = {
+        vmSize       = "Standard_DS2_v2",
         osDiskSizeGB = 30
-    },
+      },
 
-    source = {
-        type = "PlatformImage",
-            publisher = "canonical",
-            offer = "0001-com-ubuntu-server-jammy",
-            sku = "22_04-lts-gen2",
-            version = "latest"
+      source = {
+        # TODO: template
+        type      = "PlatformImage",
+        publisher = "canonical",
+        offer     = "0001-com-ubuntu-server-jammy",
+        sku       = "22_04-lts-gen2",
+        version   = "latest"
 
-    },
-    customize = [
-      {
-          type = "Shell",
-          name = "setupVM",
-          inline = concat(
-              ["bash"],
-              split("\n", file("${local.path_to_scripts}/init.sh"))
-          )
-      }
-    ],
-    distribute = [
-      {
-          type = "SharedImage",
+      },
+      customize = [
+        {
+          type   = "Shell",
+          name   = "setupVM",
+          inline = split("\n", file("${local.path_to_scripts}/init.sh"))
+        }
+      ],
+      distribute = [
+        {
+          type           = "SharedImage",
           galleryImageId = "${azurerm_shared_image.image.id}",
-          runOutputName = "${var.image_definition}",
+          runOutputName  = "${var.image_definition}",
           artifactTags = {
-              source = "azureVmImageBuilder",
-              baseosimg = "ubuntu2204"
+            source    = "azureVmImageBuilder",
+            baseosimg = "ubuntu2204"
           },
           replicationRegions = [var.location],
           storageAccountType = "Standard_LRS"
-      }
-    ]
-  }})
+        }
+      ]
+  } })
 
   tags = {
     "useridentity" = "enabled"
