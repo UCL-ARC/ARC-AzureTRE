@@ -1,6 +1,6 @@
 resource "azapi_resource" "image_template" {
   type      = "Microsoft.VirtualMachineImages/imageTemplates@2020-02-14"
-  name      = "template-${var.image_identifier}"
+  name      = var.template_name
   parent_id = data.azurerm_resource_group.compute_gallery.id
   location  = var.location
 
@@ -15,10 +15,8 @@ resource "azapi_resource" "image_template" {
       buildTimeoutInMinutes = 180,
 
       vmProfile = {
-        vmSize       = "Standard_DS2_v2",
-        osDiskSizeGB = 30
+        vmSize = "Standard_DS2_v2"
       },
-
       source = {
         type      = "PlatformImage",
         publisher = var.base_image.publisher,
@@ -27,14 +25,8 @@ resource "azapi_resource" "image_template" {
         version   = "latest"
       },
       customize = concat(
-        [
-          {
-            type   = endswith(var.init_script, ".ps1") ? "PowerShell" : "Shell",
-            name   = "setupVM",
-            inline = split("\n", file(local.init_script_path))
-          }
-        ],
-        fileexists(local.customize__file_path) ? jsondecode(file(local.customize__file_path)) : []
+        [local.init_script_block],
+        fileexists(local.customize_file_path) ? jsondecode(file(local.customize_file_path)) : []
       ),
       distribute = [
         {

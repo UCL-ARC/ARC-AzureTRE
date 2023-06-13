@@ -30,12 +30,10 @@ custom:
         version: latest
       install_ui: false
       conda_config: true
-    # For information on using custom images, see README.me in the guacamole/user-resources folder
-    # "Custom Image From Gallery":
-    #   source_image_name: your-image
-    #   install_ui: true
-    #   conda_config: true
-
+    #For information on using custom images, see README.me in the guacamole/user-resources folder
+    "Ubuntu 22.04 data science VM":
+      source_image_name: ubuntu-dsvm
+      conda_config: true
 
 credentials:
   - name: azure_tenant_id

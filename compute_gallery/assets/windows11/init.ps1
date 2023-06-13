@@ -115,18 +115,6 @@ Invoke-WebRequest -Uri $CHROME_DOWNLOAD_URL -UseBasicParsing -OutFile "$BUILD_DI
 Write-Host "Installing Chrome..."
 Start-Process "$BUILD_DIRECTORY\$CHROME_INSTALLER_FILE" -ArgumentList $CHROME_INSTALL_ARGS -Wait
 
-# Git Bash
-$GitBash_INSTALLER_FILE="Git-2.40.0-64-bit.exe"
-$GitBash_DOWNLOAD_URL="https://github.com/git-for-windows/git/releases/download/v2.40.0.windows.1/$GitBash_INSTALLER_FILE"
-$GitBash_INSTALL_PATH="$INSTALL_DIRECTORY\GitBash"
-$GitBash_INSTALL_ARGS="NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS /COMPONENTS="icons,ext\reg\shellhere,assoc,assoc_sh" /LOG=git-for-windows.log"
-
-Write-Host "Downloading Git Bash"
-Invoke-WebRequest -Uri $GitBash_DOWNLOAD_URL -UseBasicParsing -OutFile "$BUILD_DIRECTORY\$GitBash_INSTALLER_FILE"
-
-Write-Host "Installing Git Bash"
-Start-Process $GitBash_INSTALLER_FILE -ArgumentList $GitBash_INSTALL_ARGS -Wait
-
 # PATH
 Write-Host "Add Anaconda and R to PATH environment variable"
 [Environment]::SetEnvironmentVariable("PATH", "$Env:PATH;$ANACONDA_INSTALL_PATH\condabin;$R_INSTALL_PATH\bin;$VSCODE_INSTALL_PATH\bin", [EnvironmentVariableTarget]::Machine)

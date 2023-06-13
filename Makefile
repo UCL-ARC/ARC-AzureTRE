@@ -384,3 +384,8 @@ compute-gallery:
 	&& . ${MAKEFILE_DIR}/devops/scripts/check_dependencies.sh nodocker,env \
 	&& cd ${MAKEFILE_DIR}/compute_gallery/terraform \
 	&& ./deploy.sh
+
+compute-gallery-build-images:
+	$(call target_title, "Building images in compute gallery") \
+	&& . ${MAKEFILE_DIR}/devops/scripts/check_dependencies.sh nodocker,env \
+	&& ${MAKEFILE_DIR}/compute_gallery/build.sh
