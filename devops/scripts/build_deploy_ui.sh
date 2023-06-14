@@ -25,8 +25,8 @@ jq --arg rootClientId "${SWAGGER_UI_CLIENT_ID}" \
 # build and deploy the app
 
 # NOTE: _slow_ on emulated x64 container. Better to build outside
-#yarn install
-#yarn build
+yarn install
+yarn build
 
 popd
 
