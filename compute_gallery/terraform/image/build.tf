@@ -1,7 +1,7 @@
 resource "azapi_resource" "image_template" {
   type      = "Microsoft.VirtualMachineImages/imageTemplates@2020-02-14"
   name      = var.template_name
-  parent_id = data.azurerm_resource_group.compute_gallery.id
+  parent_id = var.resource_group_id
   location  = var.location
 
   body = jsonencode({

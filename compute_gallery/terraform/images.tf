@@ -3,6 +3,7 @@ module "image" {
   for_each            = local.images
   location            = azurerm_resource_group.compute_gallery.location
   resource_group_name = azurerm_resource_group.compute_gallery.name
+  resource_group_id   = azurerm_resource_group.compute_gallery.id
   image_gallery_name  = azurerm_shared_image_gallery.sig.name
   image_builder_id    = azurerm_user_assigned_identity.image_builder.id
 
