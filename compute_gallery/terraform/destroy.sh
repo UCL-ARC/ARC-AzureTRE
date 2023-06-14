@@ -12,4 +12,5 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
     -g "${TF_VAR_mgmt_resource_group_name}" \
     -s "${TF_VAR_mgmt_storage_account_name}" \
     -n "${TF_VAR_terraform_state_container_name}" \
-    -k "${TRE_ID}" -c "terraform destroy -auto-approve"
+    -k "computegallery${TRE_ID}" \
+    -c "terraform destroy -auto-approve"

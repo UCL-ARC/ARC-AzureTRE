@@ -63,3 +63,7 @@ variable "base_image" {
     sku       = string
   })
 }
+
+variable "resource_group_id" {
+  type = string
+}
