@@ -40,5 +40,4 @@ else
   done < <(grep -v -e '^[[:space:]]*$' -e '^#' "$1" ) # feed in via Process Substition to avoid bash subshell (http://mywiki.wooledge.org/ProcessSubstitution)
 fi
 
-
 set +o nounset

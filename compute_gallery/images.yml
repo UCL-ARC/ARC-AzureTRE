@@ -1,0 +1,34 @@
+ubuntu:
+  image_definition: "ubuntu-dsvm"
+  template_name: "template-ubuntu-dsvm"
+  offer_name: "Ubuntu_2204"
+  publisher_name: "ARC"
+  sku: "22.04-LTS"
+  os_type: "Linux"
+  description: "Data science Ubuntu 22.04 image"
+  hyperv_version: "V2"
+
+  base_image:
+    publisher: "canonical"
+    offer: "0001-com-ubuntu-server-jammy"
+    sku: "22_04-lts-gen2"
+
+  init_script: "init.sh"  # see templates/ubuntu
+
+
+windows11:
+  image_definition: "windows11-dsvm"
+  template_name: "template-windows11-dsvm"
+  offer_name: "Windows11_DSVM_RPython"
+  publisher_name: "ARC"
+  sku: "Windows11"
+  os_type: "Windows"
+  description: "Data science Windows 11 image"
+  hyperv_version: "V2"
+
+  base_image:
+    publisher: "MicrosoftWindowsDesktop"
+    offer: "windows-11"
+    sku: "win11-21h2-pro"
+
+  init_script: "init.ps1"  # see templates/windows11
