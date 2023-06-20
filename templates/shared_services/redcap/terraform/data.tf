@@ -1,19 +1,10 @@
-data "azurerm_subnet" "shared" {
-  resource_group_name  = local.core_resource_group_name
-  virtual_network_name = local.core_vnet
-  name                 = "SharedSubnet"
-}
+data "azurerm_client_config" "current" {}
 
-data "azurerm_subnet" "web_apps" {
+data "azurerm_subnet" "all" {
+  for_each             = toset(local.subnet_names)
   resource_group_name  = local.core_resource_group_name
   virtual_network_name = local.core_vnet
-  name                 = "WebAppSubnet"
-}
-
-data "azurerm_subnet" "mysql" {
-  resource_group_name  = local.core_resource_group_name
-  virtual_network_name = local.core_vnet
-  name                 = "MySQLSubnet"
+  name                 = each.key
 }
 
 data "azurerm_key_vault" "core" {
@@ -40,3 +31,13 @@ data "azurerm_application_insights" "core" {
   resource_group_name = local.core_resource_group_name
 }
 
+data "azurerm_private_dns_zone" "all" {
+  for_each            = local.dns_zones
+  name                = each.key
+  resource_group_name = local.core_resource_group_name
+}
+
+data "azurerm_application_insights" "redcap" {
+  name                = local.app_insights_name
+  resource_group_name = local.core_resource_group_name
+}

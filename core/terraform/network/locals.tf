@@ -20,7 +20,7 @@ locals {
   resource_processor_subnet_address_prefix  = local.core_services_vnet_subnets[9]  # .0 - .63
   firewall_management_subnet_address_prefix = local.core_services_vnet_subnets[10] # .64 - .126
 
-  mysql_subnet_address_prefix               = local.core_services_vnet_subnets[10] # .129 - .158
+  mysql_subnet_address_prefix               = local.core_services_vnet_subnets[11] # .129 - .158
   # FREE = local.core_services_vnet_subnets[11] # .159 - .191
   # FREE = local.core_services_vnet_subnets[12] # .192 - .254
 
