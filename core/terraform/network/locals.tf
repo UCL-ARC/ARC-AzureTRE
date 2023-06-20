@@ -1,5 +1,5 @@
 locals {
-  core_services_vnet_subnets = cidrsubnets(var.core_address_space, 4, 4, 4, 4, 2, 4, 4, 4, 4, 4, 4, 4, 4)
+  core_services_vnet_subnets = cidrsubnets(var.core_address_space, 4, 4, 4, 4, 2, 4, 4, 4, 4, 4, 4, 5, 5, 4)
   # Addresses examples are based on /22 CIDR
   # .0
   firewall_subnet_address_space = local.core_services_vnet_subnets[0] # .0 - .63
@@ -18,15 +18,16 @@ locals {
 
   # .3
   resource_processor_subnet_address_prefix  = local.core_services_vnet_subnets[9]  # .0 - .63
-  firewall_management_subnet_address_prefix = local.core_services_vnet_subnets[10] # .64 - .127
-  # FREE = local.core_services_vnet_subnets[11] # .128 - .191
+  firewall_management_subnet_address_prefix = local.core_services_vnet_subnets[10] # .64 - .126
+
+  mysql_subnet_address_prefix               = local.core_services_vnet_subnets[10] # .129 - .158
+  # FREE = local.core_services_vnet_subnets[11] # .159 - .191
   # FREE = local.core_services_vnet_subnets[12] # .192 - .254
 
   tre_core_tags = {
     tre_id              = var.tre_id
     tre_core_service_id = var.tre_id
   }
-
 
   private_dns_zone_names = toset([
     "privatelink.queue.core.windows.net",

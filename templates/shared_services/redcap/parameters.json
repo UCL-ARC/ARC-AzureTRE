@@ -17,6 +17,18 @@
       }
     },
     {
+      "name": "mgmt_acr_name",
+      "source": {
+        "env": "ACR_NAME"
+      }
+    },
+    {
+      "name": "mgmt_resource_group_name",
+      "source": {
+        "env": "MGMT_RESOURCE_GROUP_NAME"
+      }
+    },
+    {
       "name": "tfstate_container_name",
       "source": {
         "env": "TERRAFORM_STATE_CONTAINER_NAME"
@@ -38,6 +50,12 @@
       "name": "arm_environment",
       "source": {
         "env": "ARM_ENVIRONMENT"
+      }
+    },
+    {
+      "name": "redcap_image_path",
+      "source": {
+        "env": "REDCAP_IMAGE_PATH"
       }
     }
   ]

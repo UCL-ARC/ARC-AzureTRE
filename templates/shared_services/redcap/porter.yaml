@@ -1,7 +1,7 @@
 ---
 schemaVersion: 1.0.0
 name: tre-shared-service-redcap
-version: 0.0.2
+version: 0.0.5
 description: "A REDCap instance shared service"
 dockerfile: Dockerfile.tmpl
 registry: azuretre
@@ -19,6 +19,14 @@ parameters:
   - name: tre_id
     type: string
     description: "The ID of the parent TRE instance e.g., mytre-dev-3142"
+  - name: mgmt_acr_name
+    type: string
+    env: mgmt_acr_name
+    description: "The devops ACR name"
+  - name: mgmt_resource_group_name
+    type: string
+    description: "Resource group containing the devops ACR"
+    env: MGMT_RESOURCE_GROUP_NAME
   - name: id
     type: string
     description: "Resource ID"
@@ -40,9 +48,9 @@ parameters:
     env: ARM_ENVIRONMENT
     type: string
     default: "public"
-
-# TODO: other params
-
+  - name: redcap_image_path
+    type: string
+    description: "Path to the redcap image within the ACR (mgmt_acr_name). e.g. redcap/redcap:latest"
 
 mixins:
   - terraform:
@@ -54,7 +62,9 @@ install:
       vars:
         tre_id: ${ bundle.parameters.tre_id }
         tre_resource_id: ${ bundle.parameters.id }
-        # TODO: other vars
+        mgmt_acr_name: ${ bundle.parameters.mgmt_acr_name }
+        mgmt_resource_group_name: ${ bundle.parameters.mgmt_resource_group_name }
+        redcap_image_path: ${ bundle.parameters.redcap_image_path }
       backendConfig:
         resource_group_name: ${ bundle.parameters.tfstate_resource_group_name }
         storage_account_name: ${ bundle.parameters.tfstate_storage_account_name }
@@ -67,7 +77,9 @@ upgrade:
       vars:
         tre_id: ${ bundle.parameters.tre_id }
         tre_resource_id: ${ bundle.parameters.id }
-        # TODO: other vars
+        mgmt_acr_name: ${ bundle.parameters.mgmt_acr_name }
+        mgmt_resource_group_name: ${ bundle.parameters.mgmt_resource_group_name }
+        redcap_image_path: ${ bundle.parameters.redcap_image_path }
       backendConfig:
         resource_group_name: ${ bundle.parameters.tfstate_resource_group_name }
         storage_account_name: ${ bundle.parameters.tfstate_storage_account_name }
@@ -80,7 +92,9 @@ uninstall:
       vars:
         tre_id: ${ bundle.parameters.tre_id }
         tre_resource_id: ${ bundle.parameters.id }
-        # TODO: other vars
+        mgmt_acr_name: ${ bundle.parameters.mgmt_acr_name }
+        mgmt_resource_group_name: ${ bundle.parameters.mgmt_resource_group_name }
+        redcap_image_path: ${ bundle.parameters.redcap_image_path }
       backendConfig:
         resource_group_name: ${ bundle.parameters.tfstate_resource_group_name }
         storage_account_name: ${ bundle.parameters.tfstate_storage_account_name }

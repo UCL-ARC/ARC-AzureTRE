@@ -4,7 +4,14 @@
   "type": "object",
   "title": "REDCap shared service",
   "description": "A REDCap instance shared service",
-  "required": [],
+  "required": ["redcap_image_path"],
   "properties": {
+    "redcap_image_path": {
+      "$id": "#/properties/redcap_image_path",
+      "type": "string",
+      "title": "REDCap image path",
+      "description": "Path to the redcap image within the ACR (mgmt_acr_name). e.g. redcap/redcap:latest",
+      "updateable": true
+    }
   }
 }
