@@ -10,8 +10,9 @@
       "$id": "#/properties/redcap_image_path",
       "type": "string",
       "title": "REDCap image path",
-      "description": "Path to the redcap image within the ACR (mgmt_acr_name). e.g. redcap/redcap:latest",
-      "updateable": true
+      "description": "Path to the redcap image within the TRE ACR",
+      "updateable": true,
+      "default": "redcap/redcap:latest"
     }
   }
 }

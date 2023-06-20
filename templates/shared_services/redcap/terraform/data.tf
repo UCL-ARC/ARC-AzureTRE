@@ -33,7 +33,7 @@ data "azurerm_application_insights" "core" {
 
 data "azurerm_private_dns_zone" "all" {
   for_each            = local.dns_zones
-  name                = each.key
+  name                = each.value
   resource_group_name = local.core_resource_group_name
 }
 

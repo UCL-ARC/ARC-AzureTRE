@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "redcap" {
-  name                     = "strg${var.tre_id}"
+  name                     = "strgredcap${var.tre_id}"
   location                 = data.azurerm_resource_group.core.location
   resource_group_name      = data.azurerm_resource_group.core.name
   account_tier             = "Standard"
@@ -22,7 +22,7 @@ resource "azurerm_private_endpoint" "blob" {
   location            = data.azurerm_resource_group.core.location
   resource_group_name = data.azurerm_resource_group.core.name
   tags                = local.tags
-  subnet_id           = data.azurerm_subnet.all["shared"].id
+  subnet_id           = data.azurerm_subnet.all["SharedSubnet"].id
 
   private_dns_zone_group {
     name                 = "dns-zone-group-strg"

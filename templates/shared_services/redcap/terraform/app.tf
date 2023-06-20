@@ -16,7 +16,7 @@ resource "azurerm_linux_web_app" "redcap" {
     container_registry_use_managed_identity = true
 
     application_stack {
-      docker_image     = local.redcap_docker_image
+      docker_image     = "${data.azurerm_container_registry.mgmt.login_server}/${local.redcap_docker_image}"
       docker_image_tag = local.redcap_docker_image_tag
     }
 

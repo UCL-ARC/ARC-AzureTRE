@@ -18,10 +18,6 @@ resource "azurerm_key_vault" "redcap" {
   network_acls {
     bypass         = "AzureServices"
     default_action = "Deny"
-
-    virtual_network_subnet_ids = [
-      data.azurerm_subnet.all["WebAppSubnet"].id
-    ]
   }
 }
 
