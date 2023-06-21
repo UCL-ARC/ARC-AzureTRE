@@ -78,6 +78,28 @@ resource "azurerm_linux_web_app" "redcap" {
   ]
 }
 
+resource "azurerm_private_endpoint" "api_private_endpoint" {
+  name                = "pe-${azurerm_linux_web_app.redcap.name}"
+  location            = data.azurerm_resource_group.core.location
+  resource_group_name = data.azurerm_resource_group.core.name
+  subnet_id           = data.azurerm_subnet.all["SharedSubnet"].id
+  tags                = local.tags
+
+  lifecycle { ignore_changes = [tags] }
+
+  private_service_connection {
+    private_connection_resource_id = azurerm_linux_web_app.redcap.id
+    name                           = "psc-api-${azurerm_linux_web_app.redcap.name}"
+    subresource_names              = ["sites"]
+    is_manual_connection           = false
+  }
+
+  private_dns_zone_group {
+    name                 = "private-dns-zone-group-${azurerm_linux_web_app.redcap.name}"
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.all["webapp"].id]
+  }
+}
+
 resource "azurerm_role_assignment" "webapp_can_pull_images" {
   role_definition_name = "AcrPull"
   scope                = data.azurerm_container_registry.mgmt.id

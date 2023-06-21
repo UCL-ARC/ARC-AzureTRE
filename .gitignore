@@ -214,3 +214,8 @@ validation.txt
 
 /index.html
 .DS_Store
+
+# REDCap
+redcap*.zip
+**/redcap/app/redcap
+**/redcap/app/tmp

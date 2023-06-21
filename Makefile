@@ -395,3 +395,9 @@ compute-gallery-destroy:
 	&& . ${MAKEFILE_DIR}/devops/scripts/check_dependencies.sh nodocker,env \
 	&& cd ${MAKEFILE_DIR}/compute_gallery/terraform \
 	&& ./destroy.sh
+
+build-and-push-redcap-app:
+	. ${MAKEFILE_DIR}/devops/scripts/check_dependencies.sh porter,env && \
+	. ${MAKEFILE_DIR}/devops/scripts/set_docker_sock_permission.sh && \
+	cd ${MAKEFILE_DIR}/templates/shared_services/redcap/app/ && \
+	REDCAP_IMAGE_PATH="redcap/redcap" ACR_NAME=${ACR_NAME} ./build_and_push.sh

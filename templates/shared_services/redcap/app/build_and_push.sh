@@ -30,7 +30,7 @@ az acr login --name "${ACR_NAME}"  # ensure we're logged in to the ACR
 
 # e.g REDCAP_IMAGE_PATH=repository/redcap
 tag=$(python -c "import _version; print(_version.__version__)")
-full_path="${ACR_FQDN}/${REDCAP_IMAGE_PATH}:${tag}"
+full_path="${ACR_NAME}.azurecr.io/${REDCAP_IMAGE_PATH}:${tag}"
 
 docker build -t "${full_path}" .
 docker push "${full_path}"

@@ -46,3 +46,15 @@ resource "azurerm_private_endpoint" "keyvault" {
     subresource_names              = ["Vault"]
   }
 }
+
+resource "null_resource" "wait_for_keyvault_pe" {
+  triggers = {
+    keyvault_id = azurerm_key_vault.redcap.id
+  }
+
+  provisioner "local-exec" {
+    inline = [
+      "sleep 60"
+    ]
+  }
+}
