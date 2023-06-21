@@ -53,8 +53,6 @@ resource "null_resource" "wait_for_keyvault_pe" {
   }
 
   provisioner "local-exec" {
-    inline = [
-      "sleep 60"
-    ]
+    command = "sleep 60"
   }
 }
