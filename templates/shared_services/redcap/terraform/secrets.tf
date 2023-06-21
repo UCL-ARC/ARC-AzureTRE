@@ -6,6 +6,7 @@ resource "azurerm_key_vault_secret" "all" {
 
   depends_on = [
     azurerm_role_assignment.deployer_can_administrate_kv,
+    azurerm_private_endpoint.keyvault,
     null_resource.wait_for_keyvault_pe
    ]
 }

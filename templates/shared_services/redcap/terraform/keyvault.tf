@@ -49,10 +49,14 @@ resource "azurerm_private_endpoint" "keyvault" {
 
 resource "null_resource" "wait_for_keyvault_pe" {
   triggers = {
-    keyvault_id = azurerm_key_vault.redcap.id
+    pe_keyvault_id = azurerm_private_endpoint.keyvault.id
   }
 
   provisioner "local-exec" {
     command = "sleep 60"
   }
+
+  depends_on = [
+    azurerm_private_endpoint.keyvault
+   ]
 }

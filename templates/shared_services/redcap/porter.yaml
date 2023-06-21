@@ -1,7 +1,7 @@
 ---
 schemaVersion: 1.0.0
 name: tre-shared-service-redcap
-version: 0.0.14
+version: 0.1.0
 description: "A REDCap instance shared service"
 dockerfile: Dockerfile.tmpl
 registry: azuretre
@@ -57,6 +57,7 @@ outputs:
     type: string
     applyTo:
       - install
+      - upgrade
 
 mixins:
   - terraform:

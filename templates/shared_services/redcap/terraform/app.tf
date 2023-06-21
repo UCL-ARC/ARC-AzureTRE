@@ -78,7 +78,7 @@ resource "azurerm_linux_web_app" "redcap" {
   ]
 }
 
-resource "azurerm_private_endpoint" "api_private_endpoint" {
+resource "azurerm_private_endpoint" "redcap_app" {
   name                = "pe-${azurerm_linux_web_app.redcap.name}"
   location            = data.azurerm_resource_group.core.location
   resource_group_name = data.azurerm_resource_group.core.name
