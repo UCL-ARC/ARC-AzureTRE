@@ -50,3 +50,8 @@ resource "azurerm_subnet_route_table_association" "rt_airlock_events_subnet_asso
   subnet_id      = data.azurerm_subnet.airlock_events.id
   route_table_id = azurerm_route_table.rt.id
 }
+
+resource "azurerm_subnet_route_table_association" "rt_mysql_subnet_association" {
+  subnet_id      = data.azurerm_subnet.mysql.id
+  route_table_id = azurerm_route_table.rt.id
+}
